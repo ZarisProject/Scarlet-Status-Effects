@@ -31,6 +31,12 @@ Status effect logic is implemented inside of `StatusEffect` objects (Derived fro
 
 **2. Static -** `StatusEffectStatic` object is created once and then used by every actor that has this status effect applied to it. *Good for performance*. Per applicant data can still be stored inside `TMap`-s that use applicant's identifiers as keys.
 
+### Status Effect Info & Data Tables
+Status Effect *Meta Information* is stored inside Data Tables of `StatusEffectInfo` structure. This meta information contains the following entries:
+* `StatusEffectName` (Key Value) - ID name of the status effect;
+* `StatusEffectObjectClass` - class of the object that needs to be created.
+* *Additional information for GUI displaying.*
+
 ---
 ### Code Design
 
