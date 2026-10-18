@@ -22,8 +22,7 @@ Status effect logic is implemented inside of `StatusEffect` objects (Derived fro
 * `OnApplied` - called when the status effect is applied the first time;
 * `OnReapplied` - called when the same kind of status effect is applied again (when current one is still active);
 * `OnTick` - called every tick while the status effect is still active;
-* `OnTimeOver` - called when status effect application time (`TimeRemaining`) runs out;
-* `OnForcefullyRemoved` - called when status effect is removed by force (in any way besides `TimeRemaining` running out).
+* `OnRemoved` - called when status effect application time (`TimeRemaining`) runs out or the status effect is forcefully removed (any way other than the time running out).
 
 **Status effect objects can be of 2 types:**
 
@@ -31,15 +30,19 @@ Status effect logic is implemented inside of `StatusEffect` objects (Derived fro
 
 **2. Static -** `StatusEffectStatic` object is created once and then used by every actor that has this status effect applied to it. *Good for performance*. Per applicant data can still be stored inside `TMap`-s that use applicant's identifiers as keys.
 
-### Status Effect Info & Data Tables
+#### Static Status Effect Manager
+An actor, that creates, manages, provides and deletes **Static** status effect objects.  `StatusEffectsComponent` can request a pointer to any static status effect at any time. Status effect objects are created once the first corresponding request is received. If static manager does not exist when `StatusEffectsComponent` needs to make a request, then a new manager actor is spawned.
+
+#### Status Effect Info & Data Tables
 Status Effect *Meta Information* is stored inside Data Tables of `StatusEffectInfo` structure. This meta information contains the following entries:
 * `StatusEffectName` (Key Value) - ID name of the status effect;
 * `StatusEffectObjectClass` - class of the object that needs to be created.
 * *Additional information for GUI displaying.*
+Status effect info data tables are referenced in the `StatusEffectsComponent` (multiple data tables can be used at the same time). Only status effects from referenced tables can be applied to any specific `StatusEffectsComponent`.
 
 ---
 ### Code Design
 
-
+![](Documentation/Code%20Design.png)
 
 
