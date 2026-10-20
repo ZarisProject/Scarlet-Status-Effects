@@ -32,3 +32,29 @@ void UStatusEffectsComponent::TickComponent(float DeltaTime, ELevelTick TickType
 	// ...
 }
 
+// Returns current remaining time (in seconds) for the specified status effect, 0.0 if status effect is not applied
+float UStatusEffectsComponent::GetTimeRemaining(const FName& StatusEffect)
+{
+	return 0.0;
+}
+
+// Modifies current remaining time (in seconds) for the specified status effect
+// Does nothing if status effect is not applied
+void UStatusEffectsComponent::SetTimeRemaining(const FName& StatusEffect, float NewTime)
+{
+
+}
+
+
+// Applies a new status effect (or extends the remaining time of an exising one)
+void UStatusEffectsComponent::ApplyStatusEffect(const FName& StatusEffect, float Duration)
+{
+
+}
+
+// Forcefully removes a status effect
+// Does nothing if status effect is not applied
+void UStatusEffectsComponent::RemoveStatusEffect(const FName& StatusEffect)
+{
+
+}
