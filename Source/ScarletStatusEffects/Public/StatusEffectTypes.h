@@ -31,7 +31,7 @@ struct FStatusEffectInfo : public FTableRowBase
 
 	// Status effect object class
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    TSubclassOf<class StatusEffect> StatusEffectObjectClass;
+    TSubclassOf<class UStatusEffect> StatusEffectObjectClass;
 
 	// ...
 };
