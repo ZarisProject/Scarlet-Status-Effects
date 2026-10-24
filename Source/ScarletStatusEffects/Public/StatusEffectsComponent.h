@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "Engine/DataTable.h"
 
-#include "StatusEffect.h"
 #include "StatusEffectTypes.h"
 
 #include "StatusEffectsComponent.generated.h"
@@ -45,6 +44,23 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// UPDATERS
+
+	// Updates remaining time for all applied status effects
+	void UpdateTimers(float DeltaTime);
+
+	// Calls OnTick on every applied status effect
+	void UpdateStatusEffects(float DeltaTime);
+
+
+	// UTILITY
+	
+	// Finds the object class of the specified status effect
+	TSubclassOf<UStatusEffect>* GetStatusEffectObjectClass(const FName& StatusEffect);
+
+	// Creates (dynamic) or requests (static) a status effect object
+	UStatusEffect* ObtainStatusEffectObject(const FName& StatusEffect);
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -76,6 +92,11 @@ public:
 	// Does nothing if status effect is not applied
 	UFUNCTION(BlueprintCallable, Category="ScarletStatusEffects")
 	void RemoveStatusEffect(const FName& StatusEffect);
+
+
+	// Whether StatusEffectInfoLibrary contains info about the specified status effect
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category="ScarletStatusEffects")
+	bool IsStatusEffectValid(const FName& StatusEffect);
 
 public:
 	// Delegates
