@@ -2,8 +2,13 @@
 
 
 #include "StatusEffectsComponent.h"
+
 #include "StatusEffectTypes.h"
 #include "StatusEffect.h"
+#include "StatusEffectStatic.h"
+#include "StatusEffectDynamic.h"
+
+#include "Templates/SubclassOf.h"
 
 // Sets default values for this component's properties
 UStatusEffectsComponent::UStatusEffectsComponent()
@@ -137,5 +142,23 @@ TSubclassOf<UStatusEffect>* UStatusEffectsComponent::GetStatusEffectObjectClass(
 // Creates (dynamic) or requests (static) a status effect object
 UStatusEffect* UStatusEffectsComponent::ObtainStatusEffectObject(const FName& StatusEffect)
 {
+	TSubclassOf<UStatusEffect>* ObjectClass = GetStatusEffectObjectClass(StatusEffect);
+
+	// Return nullptr when no class was found
+	if (!ObjectClass)
+		return nullptr;
+
+	// Dynamic case
+	if (ObjectClass->Get()->IsChildOf(UStatusEffectDynamic::StaticClass()))
+	{
+		// TO DO: Spawn status effect object
+	}
+
+	// Static case
+	else if (ObjectClass->Get()->IsChildOf(UStatusEffectStatic::StaticClass()))
+	{
+		// TO DO: Request status effect object from status manager
+	}
+
 	return nullptr;
 }
