@@ -94,7 +94,24 @@ void UStatusEffectsComponent::SetTimeRemaining(const FName& StatusEffect, float 
 // Applies a new status effect (or extends the remaining time of an exising one)
 void UStatusEffectsComponent::ApplyStatusEffect(const FName& StatusEffect, float Duration)
 {
-	
+	// Extend duration if status effect is already applied
+	if (IsStatusEffectApplied(StatusEffect))
+	{
+		StatusEffects[StatusEffect].TimeRemaining += Duration;
+		StatusEffects[StatusEffect].StatusEffectObject->OnReapplied(this, GetOwner());
+	}
+
+	// Create a new entry if status effect is not applied yet
+	else 
+	{
+		FStatusEffectData NewData;
+		NewData.TimeRemaining = Duration;
+		NewData.StatusEffectObject = ObtainStatusEffectObject(StatusEffect);
+
+		StatusEffects.Add(StatusEffect, NewData);
+
+		NewData.StatusEffectObject->OnApplied(this, GetOwner());
+	}
 }
 
 // Forcefully removes a status effect
@@ -151,7 +168,7 @@ UStatusEffect* UStatusEffectsComponent::ObtainStatusEffectObject(const FName& St
 	// Dynamic case
 	if (ObjectClass->Get()->IsChildOf(UStatusEffectDynamic::StaticClass()))
 	{
-		// TO DO: Spawn status effect object
+		return NewObject<UStatusEffectDynamic>(this, ObjectClass->Get());
 	}
 
 	// Static case
