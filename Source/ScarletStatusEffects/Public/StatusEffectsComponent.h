@@ -27,6 +27,7 @@ public:
 protected:
 	
 	// Map of all currently applied status effects
+	UPROPERTY()
 	TMap<FName, FStatusEffectData> StatusEffects;
 
 	// Cached pointer to the world's static status effect manager
@@ -44,6 +45,10 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	// Attempts to find an existing static status effect controller in the world
+	// If not found, creates a new one
+	void ObtainStaticController();
+
 	// UPDATERS
 
 	// Updates remaining time for all applied status effects
@@ -52,14 +57,17 @@ protected:
 	// Calls OnTick on every applied status effect
 	void UpdateStatusEffects(float DeltaTime);
 
-
 	// UTILITY
-	
-	// Finds the object class of the specified status effect
-	TSubclassOf<UStatusEffect>* GetStatusEffectObjectClass(const FName& StatusEffect);
 
 	// Creates (dynamic) or requests (static) a status effect object
 	UStatusEffect* ObtainStatusEffectObject(const FName& StatusEffect);
+
+	// Removes status effect from the map
+	void RemoveStatusEffectInternal(const FName& StatusEffect, bool Forced);
+
+public:
+	// Finds the object class of the specified status effect
+	TSubclassOf<UStatusEffect>* GetStatusEffectObjectClass(const FName& StatusEffect);
 
 public:	
 	// Called every frame
