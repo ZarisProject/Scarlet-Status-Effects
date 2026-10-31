@@ -15,7 +15,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStatusEffectApplied, const FName&
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnStatusEffectRemoved, const FName&, StatusEffect, bool, Forced);
 
 // Class
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), BlueprintType, Blueprintable )
 class SCARLETSTATUSEFFECTS_API UStatusEffectsComponent : public UActorComponent
 {
 	GENERATED_BODY()
