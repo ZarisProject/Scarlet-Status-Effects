@@ -70,7 +70,7 @@ void UStatusEffectsComponent::UpdateStatusEffects(float DeltaTime)
 {
 	for (auto& entry : StatusEffects)
 	{
-		entry.Value.StatusEffectObject->OnTick(this, GetOwner(), DeltaTime);
+		entry.Value.StatusEffectObject->OnTick(this, GetOwner(), entry.Key, DeltaTime);
 	}
 }
 
@@ -114,7 +114,7 @@ void UStatusEffectsComponent::ApplyStatusEffect(const FName& StatusEffect, float
 	if (IsStatusEffectApplied(StatusEffect))
 	{
 		StatusEffects[StatusEffect].TimeRemaining += Duration;
-		StatusEffects[StatusEffect].StatusEffectObject->OnReapplied(this, GetOwner());
+		StatusEffects[StatusEffect].StatusEffectObject->OnReapplied(this, GetOwner(), StatusEffect);
 	}
 
 	// Create a new entry if status effect is not applied yet
@@ -126,7 +126,7 @@ void UStatusEffectsComponent::ApplyStatusEffect(const FName& StatusEffect, float
 
 		StatusEffects.Add(StatusEffect, NewData);
 
-		NewData.StatusEffectObject->OnApplied(this, GetOwner());
+		NewData.StatusEffectObject->OnApplied(this, GetOwner(), StatusEffect);
 
 		OnStatusEffectApplied.Broadcast(StatusEffect);
 	}
@@ -200,7 +200,7 @@ void UStatusEffectsComponent::RemoveStatusEffectInternal(const FName& StatusEffe
 	FStatusEffectData* entry = StatusEffects.Find(StatusEffect);
 	if (!entry)
 		return;
-	entry->StatusEffectObject->OnRemoved(this, GetOwner(), Forced);
+	entry->StatusEffectObject->OnRemoved(this, GetOwner(), StatusEffect, Forced);
 	StatusEffects.Remove(StatusEffect);
 
 	OnStatusEffectRemoved.Broadcast(StatusEffect, Forced);

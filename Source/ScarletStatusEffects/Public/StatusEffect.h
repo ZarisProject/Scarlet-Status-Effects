@@ -21,22 +21,22 @@ public:
 
 	// Called when the status effect is applied the first time
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ScarletStatusEffects|StatusEffect")
-	void OnApplied(UStatusEffectsComponent* Component, AActor* Actor);
-	virtual void OnApplied_Implementation(UStatusEffectsComponent* Component, AActor* Actor) {}
+	void OnApplied(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName);
+	virtual void OnApplied_Implementation(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName) {}
 
 	// Called when the same kind of status effect is applied again (when current one is still active)
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ScarletStatusEffects|StatusEffect")
-	void OnReapplied(UStatusEffectsComponent* Component, AActor* Actor);
-	virtual void OnReapplied_Implementation(UStatusEffectsComponent* Component, AActor* Actor) {}
+	void OnReapplied(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName);
+	virtual void OnReapplied_Implementation(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName) {}
 
 	// Called every tick while the status effect is still active
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ScarletStatusEffects|StatusEffect")
-	void OnTick(UStatusEffectsComponent* Component, AActor* Actor, float DeltaTime);
-	virtual void OnTick_Implementation(UStatusEffectsComponent* Component, AActor* Actor, float DeltaTime) {}
+	void OnTick(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName, float DeltaTime);
+	virtual void OnTick_Implementation(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName, float DeltaTime) {}
 
 	// Called when status effect application time (`TimeRemaining`) runs out 
 	// or the status effect is forcefully removed (any way other than the time running out)
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category="ScarletStatusEffects|StatusEffect")
-	void OnRemoved(UStatusEffectsComponent* Component, AActor* Actor, bool Forced);
-	virtual void OnRemoved_Implementation(UStatusEffectsComponent* Component, AActor* Actor, bool Forced) {}
+	void OnRemoved(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName, bool Forced);
+	virtual void OnRemoved_Implementation(UStatusEffectsComponent* Component, AActor* Actor, const FName& StatuEffectName, bool Forced) {}
 };
