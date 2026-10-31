@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class SCARLETSTATUSEFFECTS_API UStatusEffectDynamic : public UStatusEffect
 {
 	GENERATED_BODY()
